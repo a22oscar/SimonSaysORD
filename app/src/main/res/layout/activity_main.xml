@@ -15,7 +15,7 @@
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
         android:text="Botón Rojo"
-        android:background="@drawable/button_default_background" />
+        android:backgroundTint="#CD0101" />
 
     <Button
         android:id="@+id/button2"
@@ -24,7 +24,7 @@
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
         android:text="Botón Verde"
-        android:background="@drawable/button_default_background" />
+        android:backgroundTint="#0B8F0B" />
 
     <Button
         android:id="@+id/button3"
@@ -33,7 +33,7 @@
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
         android:text="Botón Azul"
-        android:background="@drawable/button_default_background" />
+        android:backgroundTint="#0000FF" />
 
     <Button
         android:id="@+id/button4"
@@ -42,7 +42,7 @@
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
         android:text="Botón Amarillo"
-        android:background="@drawable/button_default_background" />
+        android:backgroundTint="#C3C322" />
 
 </GridLayout>
 

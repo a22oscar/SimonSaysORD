@@ -1,8 +1,8 @@
 package com.example.simonsaysord
-
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,7 +13,8 @@ class MainActivity : AppCompatActivity() {
         R.raw.sound1,
         R.raw.sound2,
         R.raw.sound3,
-        R.raw.sound4
+        R.raw.sound4,
+        R.raw.sound5 // Nuevo sonido de derrota
     )
 
     private val simonSequence = mutableListOf<Int>()
@@ -34,27 +35,17 @@ class MainActivity : AppCompatActivity() {
 
         buttons.forEachIndexed { index, button ->
             button.setOnClickListener {
-                onButtonClick(index)
+                onButtonClick(index, button)
             }
         }
 
         startSimonSays()
     }
 
-    private fun onButtonClick(index: Int) {
+    private fun onButtonClick(index: Int, button: Button) {
         if (index == simonSequence[userSequenceIndex]) {
+            animateButton(button)
             playSound(index)
-
-            val button = getButtonByIndex(index)
-            button.setBackgroundResource(R.drawable.button_pressed_background)
-
-            // Restaurar el fondo original después de un breve período
-            Handler().postDelayed(
-                {
-                    button.setBackgroundResource(R.drawable.button_default_background)
-                },
-                200
-            )
 
             // Avanzar al siguiente botón en la secuencia
             userSequenceIndex++
@@ -67,34 +58,56 @@ class MainActivity : AppCompatActivity() {
                 playSimonSequence()
             }
         } else {
-            // El usuario se equivocó, reiniciar el juego
-            restartGame()
+            // El usuario se equivocó, manejar la derrota
+            handleDefeat()
         }
     }
 
+    private fun handleDefeat() {
+        hideButtons()
+        playSound(soundResources.last()) // Reproducir sonido de derrota
+        Handler().postDelayed({
+            showButtons()
+            restartGame()
+        }, mediaPlayer.duration.toLong()) // Reiniciar el juego después de que termine el sonido
+    }
+
+    private fun hideButtons() {
+        val buttons = arrayOf(
+            findViewById<Button>(R.id.button1),
+            findViewById<Button>(R.id.button2),
+            findViewById<Button>(R.id.button3),
+            findViewById<Button>(R.id.button4)
+        )
+        buttons.forEach { it.visibility = View.INVISIBLE }
+    }
+
+    private fun showButtons() {
+        val buttons = arrayOf(
+            findViewById<Button>(R.id.button1),
+            findViewById<Button>(R.id.button2),
+            findViewById<Button>(R.id.button3),
+            findViewById<Button>(R.id.button4)
+        )
+        buttons.forEach { it.visibility = View.VISIBLE }
+    }
+
+    private fun animateButton(button: Button) {
+        button.isPressed = true
+        Handler().postDelayed({ button.isPressed = false }, 500) // Cambiar el color del botón durante 500ms
+    }
 
     private fun playSimonSequence() {
         val handler = Handler()
-        val delayBetweenButtons = 1000L
-
-        simonSequence.forEachIndexed { index, buttonIndex ->
+        for (i in 0 until simonSequence.size) {
+            val buttonIndex = simonSequence[i]
+            val button = findViewById<Button>(getButtonId(buttonIndex))
             handler.postDelayed(
                 {
-                    val button = getButtonByIndex(buttonIndex)
-                    button.setBackgroundResource(R.drawable.button_pressed_background)
-
-                    // Restaurar el fondo original después de un breve período
-                    Handler().postDelayed(
-                        {
-                            button.setBackgroundResource(R.drawable.button_default_background)
-                        },
-                        200
-                    )
-
-                    // Reproducir el sonido
+                    animateButton(button)
                     playSound(buttonIndex)
                 },
-                (index + 1) * delayBetweenButtons
+                (i + 1) * 1000L // Retraso de 1 segundo entre cada botón en la secuencia
             )
         }
     }
@@ -107,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addRandomButtonToSimonSequence() {
-        val randomButtonIndex = (0 until soundResources.size).random()
+        val randomButtonIndex = (0 until soundResources.size - 1).random() // Excluir el sonido de derrota
         simonSequence.add(randomButtonIndex)
     }
 
@@ -120,16 +133,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getButtonByIndex(index: Int): Button {
-        return when (index) {
-            0 -> findViewById(R.id.button1)
-            1 -> findViewById(R.id.button2)
-            2 -> findViewById(R.id.button3)
-            3 -> findViewById(R.id.button4)
-            else -> throw IllegalArgumentException("Invalid button index")
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer.release()
@@ -139,4 +142,15 @@ class MainActivity : AppCompatActivity() {
         addRandomButtonToSimonSequence()
         playSimonSequence()
     }
+
+    private fun getButtonId(index: Int): Int {
+        return when (index) {
+            0 -> R.id.button1
+            1 -> R.id.button2
+            2 -> R.id.button3
+            3 -> R.id.button4
+            else -> throw IllegalArgumentException("Invalid button index")
+        }
+    }
 }
+
