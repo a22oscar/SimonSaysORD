@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private val simonSequence = mutableListOf<Int>()
     private var userSequenceIndex = 0
+    private var defeatHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +67,11 @@ class MainActivity : AppCompatActivity() {
     private fun handleDefeat() {
         hideButtons()
         playSound(soundResources.last()) // Reproducir sonido de derrota
-        Handler().postDelayed({
+        defeatHandler = Handler()
+        defeatHandler?.postDelayed({
             showButtons()
             restartGame()
-        }, mediaPlayer.duration.toLong()) // Reiniciar el juego después de que termine el sonido
+        }, mediaPlayer.duration.toLong() + 1000) // Agregar 1 segundo extra antes de reiniciar
     }
 
     private fun hideButtons() {
@@ -135,6 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        defeatHandler?.removeCallbacksAndMessages(null) // Limpiar cualquier tarea pendiente
         mediaPlayer.release()
     }
 
@@ -153,4 +156,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
