@@ -40,5 +40,5 @@ El diseño de la interfaz de usuario se define en el archivo `activity_main.xml`
 
 ¡Disfruta del juego de Simon Says!
 
-El video se ve un poco raro por que el emulador explota mi pc
+El video se ve un poco raro por que el emulador explota mi pc esta en el repositorio en la carpeta VideoApp
 
