@@ -40,14 +40,5 @@ El diseño de la interfaz de usuario se define en el archivo `activity_main.xml`
 
 ¡Disfruta del juego de Simon Says!
 
-## Contribución
+El video se ve un poco raro por que el emulador explota mi pc
 
-Las contribuciones son bienvenidas. Si deseas contribuir a este proyecto, sigue estos pasos:
-
-1. Haz un fork del repositorio.
-2. Realiza tus cambios.
-3. Envía un pull request.
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
