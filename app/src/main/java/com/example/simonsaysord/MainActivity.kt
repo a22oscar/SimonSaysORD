@@ -66,12 +66,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleDefeat() {
         hideButtons()
-        playSound(soundResources.last()) // Reproducir sonido de derrota
+        playSound(soundResources.size - 1) // Pasar el índice del último sonido (sonido de derrota)
         defeatHandler = Handler()
         defeatHandler?.postDelayed({
             showButtons()
             restartGame()
-        }, mediaPlayer.duration.toLong() + 1000) // Agregar 1 segundo extra antes de reiniciar
+        }, mediaPlayer.duration.toLong() + 1000)
     }
 
     private fun hideButtons() {
