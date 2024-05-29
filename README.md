@@ -52,7 +52,7 @@ La animación se define en un archivo XML `res/anim/shake.xml`:
         android:repeatCount="5"
         android:repeatMode="reverse"/>
 </set>
-
+```
 ### Interfaz de Usuario (XML)
 
 El diseño de la interfaz de usuario se define en el archivo `activity_main.xml`. Consiste en un GridLayout con cuatro botones de colores que representan las opciones para el jugador.
