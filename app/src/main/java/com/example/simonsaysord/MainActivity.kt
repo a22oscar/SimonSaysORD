@@ -5,6 +5,10 @@ import android.os.Handler
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import android.view.animation.AnimationUtils
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -96,7 +100,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun animateButton(button: Button) {
         button.isPressed = true
-        Handler().postDelayed({ button.isPressed = false }, 500) // Cambiar el color del botón durante 500ms
+        Handler().postDelayed({ button.isPressed = false }, 500)
+
+        // Iniciar la animación shake
+        val shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
+        button.startAnimation(shakeAnimation)
     }
 
     private fun playSimonSequence() {
@@ -156,3 +164,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
