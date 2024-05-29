@@ -1,4 +1,4 @@
-# Simon Says Android Game
+# Simon Says Android Game with Animations
 
 Este proyecto es un juego de "Simon Says" para dispositivos Android desarrollado en Android Studio. El juego sigue el clásico juego de memoria en el que el dispositivo emite una secuencia de colores y sonidos, y el jugador debe repetir esa secuencia presionando los botones en el mismo orden.
 
@@ -27,6 +27,31 @@ La clase `MainActivity` es la actividad principal de la aplicación y contiene l
 
 - **`onButtonClick()`**: Maneja el evento de clic en los botones. Comprueba si el botón pulsado corresponde al siguiente en la secuencia y maneja la derrota si no es así.
 - **`handleDefeat()`**: Oculta los botones, reproduce el sonido de derrota y reinicia el juego después de un breve retardo.
+### Animaciones
+
+Para mejorar la experiencia del usuario, se han añadido animaciones de "shake" (sacudida) a los botones cuando se presionan, tanto por el jugador como por la secuencia de Simon. Estas animaciones hacen que los botones se muevan ligeramente de un lado a otro y roten un poco, proporcionando una retroalimentación visual clara.
+
+#### Detalles de la Animación
+
+La animación se define en un archivo XML `res/anim/shake.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/cycle_interpolator">
+    <translate
+        android:duration="25"
+        android:fromXDelta="-5%"
+        android:toXDelta="5%"
+        android:repeatCount="5"
+        android:repeatMode="reverse"/>
+    <rotate
+        android:duration="25"
+        android:fromDegrees="-3"
+        android:toDegrees="3"
+        android:repeatCount="5"
+        android:repeatMode="reverse"/>
+</set>
 
 ### Interfaz de Usuario (XML)
 
