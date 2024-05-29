@@ -53,6 +53,20 @@ La animación se define en un archivo XML `res/anim/shake.xml`:
         android:repeatMode="reverse"/>
 </set>
 ```
+#### Código de Animación en Kotlin
+
+Además de la definición de la animación en XML, se utiliza el siguiente código en Kotlin para iniciar la animación cuando se presiona un botón:
+
+```kotlin
+private fun animateButton(button: Button) {
+    button.isPressed = true
+    Handler().postDelayed({ button.isPressed = false }, 500)
+
+    // Iniciar la animación shake
+    val shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
+    button.startAnimation(shakeAnimation)
+}
+```
 ### Interfaz de Usuario (XML)
 
 El diseño de la interfaz de usuario se define en el archivo `activity_main.xml`. Consiste en un GridLayout con cuatro botones de colores que representan las opciones para el jugador.
